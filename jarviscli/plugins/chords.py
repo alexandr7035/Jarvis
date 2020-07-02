@@ -2,7 +2,8 @@ import os
 from plugin import plugin, alias
 from colorama import Fore
 
-FILE_PATH = os.path.abspath(os.path.dirname(__file__))
+PLUGIN_PATH = os.path.abspath(os.path.dirname(__file__))
+CHORD_BASIC_SCHEMA_FILE = os.path.join(PLUGIN_PATH, "../data/chord_basic_schema.txt")
 
 @alias('chords')
 @plugin('chord')
@@ -14,4 +15,5 @@ class ChordsPlugin():
     """
 
     def __call__(self, jarvis, s):
-        jarvis.say("TEST TEST TEST")
+        with open(CHORD_BASIC_SCHEMA_FILE, "r") as f:
+            jarvis.say(f.read())
