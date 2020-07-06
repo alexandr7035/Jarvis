@@ -5,6 +5,22 @@ from colorama import Fore
 PLUGIN_PATH = os.path.abspath(os.path.dirname(__file__))
 CHORD_BASIC_SCHEMA_FILE = os.path.join(PLUGIN_PATH, "../data/chord_basic_schema.txt")
 
+
+# List for guitar neck
+# 6 strings, 12 flats
+#
+# See https://www.guitar-chord.org/images/fretboard.png
+EMPTY_NECK = [
+    [False, False, False, False, False, False, False, False, False, False, False, False],
+    [False, False, False, False, False, False, False, False, False, False, False, False],
+    [False, False, False, False, False, False, False, False, False, False, False, False],
+    [False, False, False, False, False, False, False, False, False, False, False, False],
+    [False, False, False, False, False, False, False, False, False, False, False, False],
+    [False, False, False, False, False, False, False, False, False, False, False, False]
+]
+
+
+
 @alias('chords')
 @plugin('chord')
 class ChordsPlugin():
@@ -15,5 +31,4 @@ class ChordsPlugin():
     """
 
     def __call__(self, jarvis, s):
-        with open(CHORD_BASIC_SCHEMA_FILE, "r") as f:
-            jarvis.say(f.read())
+        jarvis.say(str(EMPTY_NECK))
