@@ -27,11 +27,11 @@ class ChordsPlugin():
     """
     Prints the schema of a guitar chord.
     The plugin is now designed only for a 6-string guitar 
-    and its standard tuning
+    and its standard tuning.
     """
 
     def __call__(self, jarvis, s):
-        jarvis.say(str(EMPTY_NECK))
+    
 
         self.get_chord("C")
 
@@ -40,5 +40,18 @@ class ChordsPlugin():
             chords = json.load(f)
 
         chord_data = chords[chord_name]
+        chord_schema_list = EMPTY_NECK
 
-        print(chord_data)
+        # Update chord schema
+        for string in range(0,6):
+            for index, fret in enumerate(chord_schema_list[string]):
+                # Frets in the JSON are numerated from 1 while list' elements - from 0 
+                # So add 1 to indexes here
+                #
+                # FIXME: maybe should number from 0 to 5 in json to avoid this?
+                if (index + 1) in chord_data["string_" + str(string + 1)]:
+                    chord_schema_list[string][index] = True
+
+
+        print(chord_schema_list) 
+                
