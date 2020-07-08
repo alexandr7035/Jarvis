@@ -31,9 +31,19 @@ class ChordsPlugin():
     """
 
     def __call__(self, jarvis, s):
+        # Chord name must passed as "s" string
+        # Check if not empty
+        if s.strip() != "":
+            # Check if chord is described in the json
+            try:
+                self.get_chord(s.upper())
+            except KeyError:
+                jarvis.say("No such chord found.")
+        else:
+            jarvis.say("Please, specify the chord.")
     
 
-        self.get_chord("C")
+        
 
     def get_chord(self, chord_name):
         with open(CHORDS_FILE) as f:
