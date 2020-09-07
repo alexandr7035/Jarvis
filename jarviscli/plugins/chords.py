@@ -5,11 +5,14 @@ from colorama import Fore
 
 PLUGIN_PATH = os.path.abspath(os.path.dirname(__file__))
 CHORDS_FILE = os.path.join(PLUGIN_PATH, "../data/chords.json")
+NECK_FILE = os.path.join(PLUGIN_PATH, "../data/chords_plugin/neck_schema.txt")
 
 # List for guitar neck
 # 6 strings, 12 flats
 #
 # See https://www.guitar-chord.org/images/fretboard.png
+#
+# FIXME Use list generator?
 EMPTY_NECK = [
     [False, False, False, False, False, False, False, False, False, False, False, False],
     [False, False, False, False, False, False, False, False, False, False, False, False],
@@ -36,12 +39,15 @@ class ChordsPlugin():
         if s.strip() != "":
             # Check if chord is described in the json
             try:
-                self.get_chord(s.upper())
+                requested_chord = self.get_chord(s.upper())
             except KeyError:
                 jarvis.say("No such chord found.")
+                return
         else:
             jarvis.say("Please, specify the chord.")
+            return
     
+        self.print_chord(requested_chord)
 
         
 
@@ -58,10 +64,27 @@ class ChordsPlugin():
                 # Frets in the JSON are numerated from 1 while list' elements - from 0 
                 # So add 1 to indexes here
                 #
-                # FIXME: maybe should number from 0 to 5 in json to avoid this?
+                # FIXME: maybe should number from 0 to 5 in json to simplify the code?
                 if (index + 1) in chord_data["string_" + str(string + 1)]:
                     chord_schema_list[string][index] = True
 
+        return chord_schema_list
 
-        print(chord_schema_list) 
-                
+
+    def print_chord(self, chord):
+
+        output = ""
+
+        for x in chord:
+            for i in x:
+                if i is True:
+                    #print("|-*-", end="")
+                    output += "|-*-"
+                else:
+                    #print("|-*-", end="")
+                    output += "|---"
+            output += "\n" 
+            #output += 12*"|   "
+            #output += "\n" 
+
+        print(output)
