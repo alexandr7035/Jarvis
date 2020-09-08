@@ -34,6 +34,9 @@ class ChordsPlugin():
     """
 
     def __call__(self, jarvis, s):
+
+        self.jarvis = jarvis
+
         # Chord name must passed as "s" string
         # Check if not empty
         if s.strip() != "":
@@ -75,16 +78,17 @@ class ChordsPlugin():
 
         output = ""
 
-        for x in chord:
+        for index, x in enumerate(chord):
+            
+            # Number the strings
+            output += str(index+1) + " "
+
             for i in x:
                 if i is True:
-                    #print("|-*-", end="")
                     output += "|-*-"
                 else:
-                    #print("|-*-", end="")
                     output += "|---"
             output += "\n" 
-            #output += 12*"|   "
-            #output += "\n" 
 
-        print(output)
+
+        self.jarvis.say(text=output, speak=False)
