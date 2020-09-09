@@ -6,6 +6,24 @@
         "string_4": [2], 
         "string_5": [3],
         "string_6": [0]
+    },
+
+    "D": {
+        "string_1": [2],
+        "string_2": [3],
+        "string_3": [2],
+        "string_4": [0], 
+        "string_5": [0],
+        "string_6": [0]
+    },
+
+    "E": {
+        "string_1": [0],
+        "string_2": [0],
+        "string_3": [1],
+        "string_4": [2], 
+        "string_5": [2],
+        "string_6": [0]
     }
 
 }
