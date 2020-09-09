@@ -3,6 +3,8 @@ import json
 from plugin import plugin, alias
 from colorama import Fore
 
+from copy import deepcopy
+
 PLUGIN_PATH = os.path.abspath(os.path.dirname(__file__))
 CHORDS_FILE = os.path.join(PLUGIN_PATH, "../data/chords.json")
 NECK_FILE = os.path.join(PLUGIN_PATH, "../data/chords_plugin/neck_schema.txt")
@@ -32,7 +34,6 @@ class ChordsPlugin():
     The plugin is now designed only for a 6-string guitar 
     and its standard tuning.
     """
-
     def __call__(self, jarvis, s):
 
         self.jarvis = jarvis
@@ -57,9 +58,10 @@ class ChordsPlugin():
     def get_chord(self, chord_name):
         with open(CHORDS_FILE) as f:
             chords = json.load(f)
+            f.close()
 
         chord_data = chords[chord_name]
-        chord_schema_list = EMPTY_NECK
+        chord_schema_list = deepcopy(EMPTY_NECK)
 
         # Update chord schema
         for string in range(0,6):
